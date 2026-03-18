@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.2.0" use-changelog="false" max-obj-count="4"
+	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
+	 last-position="204,0" last-zoom="1"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="primedb" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" name-color="#000000" sql-disabled="true">
+</schema>
+
+<table name="known_primes" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="980" y="60"/>
+	<column name="kp_id">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="kp_number" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="kp_date_found">
+		<type name="date" length="0"/>
+	</column>
+	<column name="kp_prime_run">
+		<type name="integer" length="0"/>
+	</column>
+</table>
+
+<table name="prime_runs" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="340" y="120"/>
+	<column name="pr_id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="pr_old_primes" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="pr_new_primes" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="pr_time">
+		<type name="time" length="0"/>
+	</column>
+	<column name="pr_hostname">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="pr_cpu_model">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="pr_cpu_count">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="prime_runs_pk" type="pk-constr" table="public.prime_runs">
+		<columns names="pr_id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="known_primes_fk" type="fk-constr" alias="known_primes_fk" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.prime_runs" table="public.known_primes">
+	<columns names="kp_prime_run" ref-type="src-columns"/>
+	<columns names="pr_id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_known_primes_prime_runs" type="relfk" layers="0"
+	 src-table="public.known_primes"
+	 dst-table="public.prime_runs" reference-fk="known_primes_fk"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="-5.98807" y="-23.7027"/>
+	</label>
+</relationship>
+
+</dbmodel>
